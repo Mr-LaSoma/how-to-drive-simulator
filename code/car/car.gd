@@ -1,66 +1,150 @@
 class_name Car extends CharacterBody2D
 
-#region Variables
+signal died(car: Car);
+
+# ================ VARIABLES ================
 @export var playerDriving: bool = false;
 
-var _accelleration: float = 0;
+var brain: CarBrain = CarBrain.new();
+var is_child: bool = false;
+
+var _is_alive: bool = true;
+var _score: float = 0.0;
+
+var _acceleration: float = 0;
 var _steering: float = 0;
 
-const MAX_ACCELLERATION: float = 500;
-const MIN_ACCELLERATION: float = -500;
+const MAX_ACCELERATION: float = 500;
+const MIN_ACCELERATION: float = -500;
 
 const MAX_STEERING: float = 70;
 const MIN_STEERING: float = -70;
 
 const STEERING_TRASHOLD: float = 3;
-#endregion
 
+@onready var sprite: Sprite2D = $Sprite;
+@onready var ray1: RayCast2D = $Distance_1;
+@onready var ray2: RayCast2D = $Distance_2;
+@onready var ray3: RayCast2D = $Distance_3;
+# ===========================================
 
-
-#region Override Functions
+# =========== Override Functions ============
+func _ready() -> void:
+	if !is_child:
+		brain.init();
+	sprite.material = sprite.material.duplicate(true);
 
 func _process(delta: float) -> void:
+	if !_is_alive:
+		return;
+
 	rotation_degrees += _steering * delta;
 	
 	if playerDriving:
-		calc_acc_player();
-		calc_steer_player();
+		if !did_player_accelerated():
+			slow_down();
+		if can_steer():
+			steer_player();
+		else:
+			straighten();
+		return
+	
+	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 100;
+	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 100;
+	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100;
+	
+	var inputs: Array[float] = [_acceleration, _steering, rotation_degrees, dist1, dist2, dist3];
+	brain.get_initial_inputs_data(inputs);
+	
+	var brain_choice: Array[float] = brain.calc_output();
+	do_brain_choice(brain_choice);
 
 func _physics_process(delta: float) -> void:
+	if !_is_alive:
+		return;
+	
 	var forward = Vector2(cos(rotation), sin(rotation))
 
-	velocity = velocity.move_toward(forward * _accelleration, 100 * delta)
-	if _accelleration == 0:
+	velocity = velocity.move_toward(forward * _acceleration, 100 * delta)
+	if _acceleration == 0:
 		velocity = velocity.move_toward(Vector2.ZERO, 200 * delta)
-		
+
 	move_and_slide();
+# ===========================================
 
-#endregion
-
-
-
-#region Helper Functions
-
-func calc_acc_player() -> void:
+# ============ Player Functions =============
+func did_player_accelerated() -> bool:
 	if Input.is_action_pressed("acc_+"):
-		_accelleration = lerp(_accelleration, MAX_ACCELLERATION, 0.5)
+		accelerate_forward();
 	elif Input.is_action_pressed("acc_-"):
-		_accelleration = lerp(_accelleration, MIN_ACCELLERATION, 0.5)
+		accelerate_backward();
 	else:
-		if _accelleration > STEERING_TRASHOLD or _accelleration < -STEERING_TRASHOLD:
-			_accelleration = lerp(_accelleration, 0.0, 0.05)
-		else:
-			_accelleration = lerp(_accelleration, 0.0, 0.5)
+		return false;
+	return true;
 
-func calc_steer_player() -> void:
-	if _accelleration > STEERING_TRASHOLD or _accelleration < -STEERING_TRASHOLD:
-		var target_steering: float = 0
-		if Input.is_action_pressed("steer_+"):
-			target_steering = MAX_STEERING
-		elif Input.is_action_pressed("steer_-"):
-			target_steering = MIN_STEERING
-		_steering = lerp(_steering, target_steering, 0.5)
+func steer_player() -> void:
+	if Input.is_action_pressed("steer_+"):
+		steer_left()
+	elif Input.is_action_pressed("steer_-"):
+		steer_right();
+	else:
+		_steering = lerp(_steering, 0.0, 0.02);
+# ===========================================
+
+# ============= Brain Functions =============
+func do_brain_choice(brain_choice: Array[float]) -> void:
+	if brain_choice[1] == 1:
+		accelerate_forward();
+	elif brain_choice[1] == -1:
+		accelerate_backward();
+	else:
+		slow_down();
+	
+	if !can_steer():
+		straighten();
 		return
-	_steering = lerp(_steering, 0.0, 2)
+	
+	if brain_choice[0] == 1:
+		steer_left();
+	elif brain_choice[0] == -1:
+		steer_right();
+	else:
+		_steering = lerp(_steering, 0.0, 0.02)
+# ===========================================
 
-#endregion
+# =========== Car Movement Functions ========
+func kill() -> void:
+	_is_alive = false;
+	_acceleration = 0.0;
+	_steering = 0.0;
+	died.emit(self)
+	
+	var temp: ShaderMaterial = sprite.material;
+	temp.set_shader_parameter("is_dead", true)
+
+func add_score(value: float) -> void:
+	_score += value;
+
+func accelerate_forward() -> void:
+	_acceleration = lerp(_acceleration, MAX_ACCELERATION, 0.5);
+func accelerate_backward() -> void:
+	_acceleration = lerp(_acceleration, MIN_ACCELERATION, 0.5)
+
+func slow_down() -> void:
+	if _acceleration > STEERING_TRASHOLD or _acceleration < -STEERING_TRASHOLD:
+		_acceleration = lerp(_acceleration, 0.0, 0.05);
+	else:
+		_acceleration = lerp(_acceleration, 0.0, 0.5);
+
+
+func can_steer() -> bool:
+	return _acceleration > STEERING_TRASHOLD or _acceleration < -STEERING_TRASHOLD
+
+func steer_left() -> void:
+	_steering = lerp(_steering, MAX_STEERING, 0.5);
+func steer_right() -> void:
+	_steering = lerp(_steering, MIN_STEERING, 0.5);
+
+func straighten() -> void:
+	_steering = lerp(_steering, 0.0, 1)
+# ===========================================
