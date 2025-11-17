@@ -7,15 +7,7 @@ var dead_cars: Array[Car];
 const N_INITIAL_CARS: int = 10;
 
 func _ready() -> void:
-	randomize()
-	for i in range(N_INITIAL_CARS):
-		var temp: Car = CAR_SCENE.instantiate()
-		alive_cars.append(temp);
-		
-		temp.died.connect(_on_car_died);
-		temp.is_child = false;
-		
-		add_child(temp);
+	randomize()	
 
 func _on_car_died(dead_car: Car) -> void:
 	var car_index: int = alive_cars.find(dead_car);

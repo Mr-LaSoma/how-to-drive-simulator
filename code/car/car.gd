@@ -5,9 +5,6 @@ signal died(car: Car);
 # ================ VARIABLES ================
 @export var playerDriving: bool = false;
 
-var brain: CarBrain = CarBrain.new();
-var is_child: bool = false;
-
 var _is_alive: bool = true;
 var _score: float = 0.0;
 
@@ -30,8 +27,6 @@ const STEERING_TRASHOLD: float = 3;
 
 # =========== Override Functions ============
 func _ready() -> void:
-	if !is_child:
-		brain.init();
 	sprite.material = sprite.material.duplicate(true);
 
 func _process(delta: float) -> void:
@@ -52,12 +47,6 @@ func _process(delta: float) -> void:
 	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 100;
 	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 100;
 	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100;
-	
-	var inputs: Array[float] = [_acceleration, _steering, rotation_degrees, dist1, dist2, dist3];
-	brain.get_initial_inputs_data(inputs);
-	
-	var brain_choice: Array[float] = brain.calc_output();
-	do_brain_choice(brain_choice);
 
 func _physics_process(delta: float) -> void:
 	if !_is_alive:
@@ -88,7 +77,7 @@ func steer_player() -> void:
 	elif Input.is_action_pressed("steer_-"):
 		steer_right();
 	else:
-		_steering = lerp(_steering, 0.0, 0.02);
+		straigten_slowly();
 # ===========================================
 
 # ============= Brain Functions =============
@@ -112,7 +101,7 @@ func do_brain_choice(brain_choice: Array[float]) -> void:
 		_steering = lerp(_steering, 0.0, 0.02)
 # ===========================================
 
-# =========== Car Movement Functions ========
+
 func kill() -> void:
 	_is_alive = false;
 	_acceleration = 0.0;
@@ -125,6 +114,7 @@ func kill() -> void:
 func add_score(value: float) -> void:
 	_score += value;
 
+# =========== Car Movement Functions ========
 func accelerate_forward() -> void:
 	_acceleration = lerp(_acceleration, MAX_ACCELERATION, 0.5);
 func accelerate_backward() -> void:
@@ -144,6 +134,9 @@ func steer_left() -> void:
 	_steering = lerp(_steering, MAX_STEERING, 0.5);
 func steer_right() -> void:
 	_steering = lerp(_steering, MIN_STEERING, 0.5);
+
+func straigten_slowly() -> void:
+	_steering = lerp(_steering, 0.0, 0.02);
 
 func straighten() -> void:
 	_steering = lerp(_steering, 0.0, 1)

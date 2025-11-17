@@ -1,8 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhkvrxe11c11a"]
+[gd_scene load_steps=5 format=3 uid="uid://dhkvrxe11c11a"]
 
 [ext_resource type="Script" uid="uid://bmwpvjhfbhs4y" path="res://code/game_handler.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://de76j5oq1tibl" path="res://scenes/car.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://ddj4xlyfep1mb" path="res://scenes/pista_1.tscn" id="2_yqjtg"]
+[ext_resource type="Texture2D" uid="uid://t72cry3xs2qs" path="res://icon.svg" id="3_lnu2h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lnu2h"]
+size = Vector2(128, 128)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -15,4 +18,11 @@ zoom = Vector2(0.75, 0.75)
 position = Vector2(-232, 0)
 playerDriving = true
 
-[node name="Pista1" parent="." instance=ExtResource("2_yqjtg")]
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 2
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
+texture = ExtResource("3_lnu2h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource("RectangleShape2D_lnu2h")
