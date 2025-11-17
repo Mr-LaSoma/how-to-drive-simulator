@@ -7,17 +7,28 @@ var _layers: Array[Dense] = [
 
 var _owned_car: Car;
 
+## Initialize the CarBrain [br][br]
+## [param car]: the car moved by the brain. [br]
+## [b] Note: [/b] all the dense layers are manualy initialized in the [CarBrain] class
 func _init(car: Car) -> void:
 	_owned_car = car;
 
+## Calculate the output of the layers [code] [acceleration, steering] [/code]. [br][br]
+## [param inputs]: inputs passed in for the calculation. [br]
+## [b]Note:[/b] the inputs size must be the same as the [param n_inputs] of the first dense layer. [br][br]
+## For more information about the calculation watch the [method Dense.forward] annotations.
 func _forward(inputs: Array[float]) -> Array[float]:
 	var current_inputs: Array[float] = inputs.duplicate(true);
 	
 	for dense in _layers:
 		current_inputs = dense.forward(current_inputs).duplicate();
-	
+
 	return current_inputs;
 
+## Function used to play the actual game from the brain. [br][br]
+## [param inputs]: inputs passed in for the calculation. [br]
+## [b]Note:[/b] the inputs size must be the same as the [param n_inputs] of the first dense layer. [br][br]
+## For more information about the calculation watch the [method CarBrain._forward] annotations and all the [Car] class API methods.
 func play(inputs: Array[float]) -> void:
 	var decisions: Array[float] = _forward(inputs);
 	
