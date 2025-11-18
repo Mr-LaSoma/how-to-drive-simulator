@@ -89,7 +89,7 @@ func do_brain_choice(brain_choice: Array[float]) -> void:
 	else:
 		slow_down();
 	
-	if !can_steer():
+	if !is_acceleration_in_thrashold():
 		straighten();
 		return
 	
@@ -121,13 +121,12 @@ func accelerate_backward() -> void:
 	_acceleration = lerp(_acceleration, MIN_ACCELERATION, 0.5)
 
 func slow_down() -> void:
-	if _acceleration > STEERING_TRASHOLD or _acceleration < -STEERING_TRASHOLD:
+	if is_acceleration_in_thrashold():
 		_acceleration = lerp(_acceleration, 0.0, 0.05);
 	else:
 		_acceleration = lerp(_acceleration, 0.0, 0.5);
 
-
-func can_steer() -> bool:
+func is_acceleration_in_thrashold() -> bool:
 	return _acceleration > STEERING_TRASHOLD or _acceleration < -STEERING_TRASHOLD
 
 func steer_left() -> void:

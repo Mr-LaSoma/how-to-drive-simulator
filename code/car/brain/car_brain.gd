@@ -42,7 +42,7 @@ func play(inputs: Array[float]) -> void:
 	else:
 		_owned_car.slow_down();
 	
-	if !_owned_car.can_steer():
+	if !_owned_car.is_acceleration_in_thrashold():
 		_owned_car.straighten();
 		return
 	
