@@ -9,16 +9,20 @@ size = Vector2(128, 128)
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
-CAR_SCENE = ExtResource("1_uwrxv")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(0.75, 0.75)
+[node name="CarDeathTimer" type="Timer" parent="."]
 
 [node name="TestCar" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(-232, 0)
 playerDriving = true
 
+[node name="Camera2D" type="Camera2D" parent="TestCar"]
+position = Vector2(116, 0)
+scale = Vector2(0.5, 0.5)
+zoom = Vector2(0.75, 0.75)
+
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(340, 48)
 collision_layer = 2
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D"]
@@ -26,3 +30,5 @@ texture = ExtResource("3_lnu2h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 shape = SubResource("RectangleShape2D_lnu2h")
+
+[connection signal="timeout" from="CarDeathTimer" to="." method="_on_car_death_timer_timeout"]

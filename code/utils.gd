@@ -1,5 +1,13 @@
-extends Object
+extends Node
 
+const CAR_SCENE = preload("res://scenes/car.tscn");
+const N_INITIAL_CARS: int = 10;
+
+const N_PARENTS_CARS: int = 5;
+
+const DEATH_PENALTY: float = 40.0;
+const CHECK_POINT_POINTS: float = 50.0;
+const TIME_PENALTY: float = 5.0;
 
 func super_randf() -> float:
 	return randf() * randf();

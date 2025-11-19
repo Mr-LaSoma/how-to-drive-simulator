@@ -10,11 +10,23 @@ var _bias: float;
 ##		_weights.append(randf());
 ##	_bias = randf();
 ## [/codeblock]
-func _init(n_inputs: int) -> void:
-	for i in range(n_inputs):
-		_weights.append(randf());
+func _init(n_inputs: int, should_rand: bool) -> void:
+	if !should_rand:
+		return;
 	
-	_bias = randf();
+	for i in range(n_inputs):
+		_weights.append(GUtils.super_randf());
+	
+	_bias = GUtils.super_randf();
+
+## Creates a new neuron with the mutated weigths and bias. [br][br]
+## For more information about the mutation whatch the
+## [method Neuron._mutate_weigths] & [method Neuron._mutate_bias] annotations.
+func new_neuron() -> Neuron:
+	var _new_neuron: Neuron = Neuron.new(_weights.size(), false);
+	_new_neuron._weights = self._mutate_weigths();
+	_new_neuron._bias = self._mutate_bias();
+	return _new_neuron;
 
 ## Calculate the summation for the moltiplications (weight * input). [br][br]
 ## [img width=200]res://assets//docs_img//weighted_sum.png[/img] [br][br]
@@ -34,18 +46,24 @@ func _calc_z(inputs: Array[float]) -> float:
 ## [param inputs]: inputs passed in for the calculation. [br]
 ## [param activation_func]: Callable of the activation function. [br]
 ## [b]Note:[/b] the inputs size must be the same as the [param n_inputs] [br][br]
-##  For more information about the calculation watch the [method Neuron._calc_z] annotations.
+## For more information about the calculation watch the [method Neuron._calc_z] annotations.
 func forward(inputs: Array[float], activation_func: Callable) -> float:
 	var z: float = _calc_z(inputs);
 	return activation_func.call(z);
 
 ## Mutate all the weights. [br][br]
 ## Returs the mutated weights
-## For the specific watch the [method Utils.mutate_value] annotations.
-func mutate_weigths() -> Array[float]:
+## For the specific watch the [method GUtils.mutate_value] annotations.
+func _mutate_weigths() -> Array[float]:
 	var new_weigths: Array[float];
 	
 	for weight in _weights:
-		new_weigths.append(Utils.mutate_value(weight));
+		new_weigths.append(GUtils.mutate_value(weight));
 	
 	return new_weigths
+
+## Mutate the bias. [br][br]
+## Returs the mutated bias
+## For the specific watch the [method GUtils.mutate_value] annotations.
+func _mutate_bias() -> float:
+	return GUtils.mutate_value(_bias);
