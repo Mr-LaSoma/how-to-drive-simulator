@@ -4,6 +4,9 @@ signal died(car: Car);
 
 # ================ VARIABLES ================
 @export var playerDriving: bool = false;
+@export var _should_rand: bool = false;
+
+var _brain: CarBrain;
 
 var _is_alive: bool = true;
 var _score: float = 0.0;
@@ -26,8 +29,12 @@ const STEERING_TRASHOLD: float = 3;
 # ===========================================
 
 # =========== Override Functions ============
+
 func _ready() -> void:
 	sprite.material = sprite.material.duplicate(true);
+	
+	if _should_rand:
+		_brain = CarBrain.new(self, true);
 
 func _process(delta: float) -> void:
 	if !_is_alive:
@@ -44,9 +51,11 @@ func _process(delta: float) -> void:
 			straighten();
 		return
 	
-	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 100;
-	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 100;
-	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100;
+	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 100.0;
+	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 100.0;
+	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100.0;
+	
+	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3]);
 
 func _physics_process(delta: float) -> void:
 	if !_is_alive:
