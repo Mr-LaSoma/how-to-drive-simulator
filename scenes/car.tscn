@@ -18,7 +18,7 @@ radius = 8.0
 height = 28.0
 
 [node name="Car" type="CharacterBody2D"]
-scale = Vector2(2, 2)
+rotation = -1.5707964
 collision_mask = 2
 script = ExtResource("1_qt2eu")
 

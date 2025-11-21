@@ -25,8 +25,9 @@ func _ready() -> void:
 	
 	reset_game(true);
 
-func _process(_delta: float) -> void:
-	print(car_death_timer.time_left);
+func _process(delta: float) -> void:
+	for car in alive_cars:
+		car.add_score(GUtils.TIME_PENALTY)
 
 func _on_car_died(dead_car: Car) -> void:
 	dead_cars.append(dead_car);
@@ -51,6 +52,8 @@ func reset_game(first_time: bool) -> void:
 	
 	# Ordina le auto morte per punteggio decrescente
 	dead_cars.sort_custom(_sort_by_score_desc)
+	for car in dead_cars:
+		car.print_weights()
 	
 	# Prendi le top 5 (o meno se ce ne sono meno)
 	var top_cars = dead_cars.slice(0, min(GUtils.N_PARENTS_CARS, dead_cars.size()))
@@ -68,8 +71,6 @@ func reset_game(first_time: bool) -> void:
 		alive_cars.append(new_car)
 		add_child(new_car)
 	
-	# Debug
-	print("Dead cars:", dead_cars.size())
 	for car in dead_cars:
 		if car.is_inside_tree():
 			car.get_parent().remove_child(car)
@@ -81,7 +82,7 @@ func reset_game(first_time: bool) -> void:
 
 # Funzione per ordinare in base al punteggio decrescente
 func _sort_by_score_desc(a: Car, b: Car) -> int:
-	return a._score < b._score;
+	return a._score > b._score;
 
 
 

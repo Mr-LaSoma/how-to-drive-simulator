@@ -1,0 +1,365 @@
+[gd_scene load_steps=35 format=3 uid="uid://city3i6awvvag"]
+
+[ext_resource type="Texture2D" uid="uid://bov1id771qldw" path="res://assets/arrive.png" id="1_7xies"]
+[ext_resource type="Texture2D" uid="uid://c3cfx768xx84i" path="res://assets/street.png" id="1_87ub3"]
+[ext_resource type="Script" uid="uid://gmk50con0k8b" path="res://code/checkpointmanager.gd" id="2_k075t"]
+[ext_resource type="Shader" uid="uid://bdk7oef67qpjs" path="res://assets/shaders/checkpoint.gdshader" id="3_00lji"]
+[ext_resource type="Texture2D" uid="uid://7jr2ckeuoy6k" path="res://assets/checkpoint.png" id="3_lj2ar"]
+[ext_resource type="Texture2D" uid="uid://bds3om31mywn3" path="res://assets/checkpoint2.png" id="4_0dnla"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_08vx1"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fog8g"]
+size = Vector2(60.000015, 2.999999)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k075t"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_00lji"]
+size = Vector2(3, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_00lji"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0dnla"]
+size = Vector2(3, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v17nm"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2kntv"]
+size = Vector2(3, 50.199997)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0dnla"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k075t"]
+size = Vector2(50, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nfx0i"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gbsvo"]
+size = Vector2(50, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kntv"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v17nm"]
+size = Vector2(61.000004, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fog8g"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2vcri"]
+size = Vector2(3, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vcri"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqnuq"]
+size = Vector2(3, 40)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m3f5x"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_m3f5x"]
+size = Vector2(3.000001, 50.000015)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wqnuq"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_08vx1"]
+size = Vector2(50, 3)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u5xrg"]
+shader = ExtResource("3_00lji")
+shader_parameter/opacity = 0.6
+shader_parameter/is_transparent = true
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u5xrg"]
+size = Vector2(49.999996, 3)
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_87ub3"]
+texture = ExtResource("1_87ub3")
+texture_region_size = Vector2i(10, 5)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -2.5, 5, -2.5, 5, 2.5, -5, 2.5, -5, -2.5)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -2.5, -5, -1.5, -5, 2.5, 5, 2.5, 5, -1.5, 4, -2.5)
+
+[sub_resource type="TileSet" id="TileSet_7xies"]
+tile_size = Vector2i(10, 5)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_87ub3")
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7xies"]
+texture = ExtResource("1_87ub3")
+texture_region_size = Vector2i(10, 5)
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-5, -2.5, 5, -2.5, 5, 2.5, -5, 2.5)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-4, -2.5, -5, -1.5, -5, 2.5, 5, 2.5, 5, -1.5, 4, -2.5)
+
+[sub_resource type="TileSet" id="TileSet_lj2ar"]
+tile_size = Vector2i(5, 10)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_7xies")
+
+[node name="Map1" type="Node2D"]
+scale = Vector2(5, 5)
+
+[node name="Finish" type="TextureRect" parent="."]
+texture_filter = 1
+offset_left = -60.0
+offset_top = 42.0
+offset_right = -10.0
+offset_bottom = 45.0
+texture = ExtResource("1_7xies")
+stretch_mode = 1
+
+[node name="Checkpoints2" type="Node2D" parent="."]
+script = ExtResource("2_k075t")
+
+[node name="Checkpoint1" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_08vx1")
+offset_left = -60.0
+offset_top = 31.8
+offset_bottom = 34.8
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint1"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint1/Area2D"]
+position = Vector2(29.999992, 1.5000019)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_fog8g")
+
+[node name="Checkpoint2" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_k075t")
+offset_left = 2.0
+offset_top = -10.0
+offset_right = 5.0
+offset_bottom = 30.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint2"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint2/Area2D"]
+position = Vector2(1.5, 20)
+shape = SubResource("RectangleShape2D_00lji")
+
+[node name="Checkpoint3" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_00lji")
+offset_left = 55.0
+offset_top = -10.0
+offset_right = 58.0
+offset_bottom = 30.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint3"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint3/Area2D"]
+position = Vector2(1.5, 20)
+shape = SubResource("RectangleShape2D_0dnla")
+
+[node name="Checkpoint4" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_v17nm")
+offset_left = 64.59999
+offset_top = -9.999999
+offset_right = 67.59999
+offset_bottom = 40.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint4"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint4/Area2D"]
+position = Vector2(1.5000153, 25.099995)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_2kntv")
+
+[node name="Checkpoint5" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_0dnla")
+offset_left = 70.0
+offset_top = 42.0
+offset_right = 120.0
+offset_bottom = 45.0
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint5"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint5/Area2D"]
+position = Vector2(25, 1.5)
+shape = SubResource("RectangleShape2D_k075t")
+
+[node name="Checkpoint6" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_nfx0i")
+offset_left = 70.0
+offset_top = 95.0
+offset_right = 120.0
+offset_bottom = 98.0
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint6"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint6/Area2D"]
+position = Vector2(25, 1.5)
+shape = SubResource("RectangleShape2D_gbsvo")
+
+[node name="Checkpoint7" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_2kntv")
+offset_left = 59.8
+offset_top = 105.2
+offset_right = 119.799995
+offset_bottom = 108.2
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint7"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint7/Area2D"]
+position = Vector2(30.299995, 1.5)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_v17nm")
+
+[node name="Checkpoint8" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_fog8g")
+offset_left = 55.0
+offset_top = 110.0
+offset_right = 58.0
+offset_bottom = 150.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint8"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint8/Area2D"]
+position = Vector2(1.5, 20)
+shape = SubResource("RectangleShape2D_2vcri")
+
+[node name="Checkpoint9" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_2vcri")
+offset_left = 2.0
+offset_top = 110.0
+offset_right = 5.0
+offset_bottom = 150.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint9"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint9/Area2D"]
+position = Vector2(1.5, 20)
+shape = SubResource("RectangleShape2D_wqnuq")
+
+[node name="Checkpoint10" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_m3f5x")
+offset_left = -8.0
+offset_top = 100.0
+offset_right = -5.0
+offset_bottom = 150.0
+texture = ExtResource("4_0dnla")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint10"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint10/Area2D"]
+position = Vector2(1.5, 25)
+scale = Vector2(0.99999976, 0.99999976)
+shape = SubResource("RectangleShape2D_m3f5x")
+
+[node name="Checkpoint11" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_wqnuq")
+offset_left = -60.0
+offset_top = 95.0
+offset_right = -10.0
+offset_bottom = 98.0
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint11"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint11/Area2D"]
+position = Vector2(25, 1.5)
+shape = SubResource("RectangleShape2D_08vx1")
+
+[node name="Checkpoint12" type="TextureRect" parent="Checkpoints2"]
+texture_filter = 1
+material = SubResource("ShaderMaterial_u5xrg")
+offset_left = -60.0
+offset_top = 51.0
+offset_right = -10.000004
+offset_bottom = 54.0
+texture = ExtResource("3_lj2ar")
+stretch_mode = 1
+
+[node name="Area2D" type="Area2D" parent="Checkpoints2/Checkpoint12"]
+collision_layer = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Checkpoints2/Checkpoint12/Area2D"]
+position = Vector2(25, 1.5)
+scale = Vector2(0.99999994, 0.99999994)
+shape = SubResource("RectangleShape2D_u5xrg")
+
+[node name="StreetVer" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_7xies")
+format = 2
+layer_0/tile_data = PackedInt32Array(327673, 0, 0, 393209, 0, 0, 458745, 0, 0, 262137, 0, 0, 196601, 0, 0, 131065, 0, 0, 65529, 0, 0, -7, 0, 0, -65543, 0, 1, 524281, 0, 805306368, 589817, 0, 0, 655353, 0, 0, 524300, 0, 805306368, 458764, 0, 805306368, 393228, 0, 805306368, 327692, 0, 805306368, 262156, 0, 805306368, 196620, 0, 805306368, 131084, 0, 805306368, 65548, 0, 805306368, 12, 0, 805306368, -65524, 0, 805306368, -131060, 0, 1, 589836, 0, 0, 655372, 0, 0, 720908, 0, 0, 786444, 0, 0, 851980, 0, 0, 917516, 0, 0, 983052, 0, 0, 1048588, 0, 0, 1114124, 0, 0, 1179660, 0, 0, 1245196, 0, 0, 1310732, 0, 0, 1376268, 0, 0, 1441804, 0, 0, 1507340, 0, 0, 1572876, 0, 0, 1638412, 0, 0, 720889, 0, 805306368, 786425, 0, 805306368, 851961, 0, 805306368, 917497, 0, 805306368, 983033, 0, 805306368, 1048569, 0, 805306368, 1114105, 0, 805306368, 1179641, 0, 805306368, 1245177, 0, 805306368, 1310713, 0, 805306368, 1376249, 0, 805306368, 1441785, 0, 805306368, 1507321, 0, 805306368, 1572857, 0, 805306368, 1703929, 0, 805306368, 1769465, 0, 805306368, 1835001, 0, 805306368, 1900537, 0, 805306368, 1966073, 0, 805306369, 1638393, 0, 805306368, 1703948, 0, 805306368, 1769484, 0, 805306368, 1835020, 0, 805306368, 1900556, 0, 805306369, 1310719, 0, 805306369, 589823, 0, 1, 524294, 0, 1, 1245190, 0, 805306369, 589830, 0, 0, 655366, 0, 0, 720902, 0, 0, 786438, 0, 0, 851974, 0, 0, 917510, 0, 0, 983046, 0, 0, 1048582, 0, 0, 1114118, 0, 0, 1179654, 0, 0, 655359, 0, 0, 720895, 0, 0, 786431, 0, 0, 851967, 0, 0, 917503, 0, 0, 983039, 0, 0, 1048575, 0, 0, 1114111, 0, 0, 1179647, 0, 0, 1245183, 0, 0)
+
+[node name="StreetHor" type="TileMap" parent="."]
+texture_filter = 1
+tile_set = SubResource("TileSet_lj2ar")
+format = 2
+layer_0/tile_data = PackedInt32Array(-65537, 0, 1610612736, -131072, 0, 1610612736, -131071, 0, 1610612736, -131070, 0, 1610612736, -131069, 0, 1342177280, -65539, 0, 1342177280, -65538, 0, 1610612736, -65540, 0, 1342177280, -65541, 0, 1342177280, -65542, 0, 1342177280, -65543, 0, 1342177280, -65544, 0, 1342177280, -65545, 0, 1342177280, -65546, 0, 1342177280, -65547, 0, 1342177280, -65548, 0, 1610612737, 196610, 0, 1342177280, 196611, 0, 1342177280, 196612, 0, 1342177280, 196613, 0, 1342177280, 196614, 0, 1342177280, 196615, 0, 1342177280, 196616, 0, 1342177280, 196617, 0, 1342177280, 196618, 0, 1342177280, 196619, 0, 1342177281, 655362, 0, 1342177280, 655371, 0, 1342177281, 655370, 0, 1342177280, 655369, 0, 1342177280, 655368, 0, 1342177280, 655367, 0, 1342177280, 655366, 0, 1342177280, 655365, 0, 1342177280, 655364, 0, 1342177280, 655363, 0, 1342177280, -131068, 0, 1342177280, -131067, 0, 1342177280, -131066, 0, 1342177280, -131065, 0, 1342177280, -131064, 0, 1342177280, -131063, 0, 1342177280, -131062, 0, 1342177280, -131061, 0, 1342177280, -131060, 0, 1342177280, -131059, 0, 1342177280, -131058, 0, 1342177280, -131057, 0, 1342177280, -131056, 0, 1342177280, -131055, 0, 1342177280, -131054, 0, 1342177280, 983053, 0, 1342177280, 983054, 0, 1342177280, 983055, 0, 1342177280, 983056, 0, 1342177280, 983057, 0, 1342177280, 983058, 0, 1342177280, 983059, 0, 1342177280, 983060, 0, 1342177280, 983061, 0, 1342177280, 983062, 0, 1342177280, 983063, 0, 1342177281, 983052, 0, 1342177280, 983051, 0, 1342177280, 983050, 0, 1342177280, 983049, 0, 1342177280, 983048, 0, 1342177280, 983047, 0, 1342177280, 983046, 0, 1342177280, 983045, 0, 1342177280, 983044, 0, 1342177280, 983043, 0, 1342177280, 983042, 0, 1342177280, 983041, 0, 1342177280, 983040, 0, 1342177280, 1048575, 0, 1342177280, 1048574, 0, 1342177280, 1048573, 0, 1342177280, 1048572, 0, 1342177280, 1048571, 0, 1342177280, 1048570, 0, 1342177280, 1048569, 0, 1342177280, 1048568, 0, 1342177280, 1048564, 0, 1610612737, 1048565, 0, 1342177280, 1048566, 0, 1342177280, 1048567, 0, 1342177280, -131049, 0, 1342177281, -131050, 0, 1342177280, -131051, 0, 1342177280, -131052, 0, 1342177280, -131053, 0, 1342177280, 655360, 0, 1610612737, 196608, 0, 1610612737, 196609, 0, 1342177280, 655361, 0, 1342177280)

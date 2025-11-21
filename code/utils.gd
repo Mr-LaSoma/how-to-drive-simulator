@@ -5,9 +5,9 @@ const N_INITIAL_CARS: int = 10;
 
 const N_PARENTS_CARS: int = 5;
 
-const DEATH_PENALTY: float = 40.0;
-const CHECK_POINT_POINTS: float = 50.0;
-const TIME_PENALTY: float = 5.0;
+const DEATH_PENALTY: float = -40.0;
+const CHECKPOINT_POINTS: float = 150.0;
+const TIME_PENALTY: float = -0.1;
 
 func super_randf() -> float:
 	return randf() * randf();
@@ -44,5 +44,5 @@ func normalize_than_output(output: float) -> float:
 ## The mutation is just adding to the [param value] a random [code] float [/code]. [br]
 ## The float is a random R value from 0 to 1
 func mutate_value(value: float) -> float:
-	return value + randf();
+	return value + randf_range(-5, 5);
 #endregion ==============================================================

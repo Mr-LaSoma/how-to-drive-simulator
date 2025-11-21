@@ -65,8 +65,8 @@ func mutate(other_car: CarBrain) -> Car:
 		child_brain_layers.append(_layers[lsize - lhalf_size])
 	
 	for i in range(lhalf_size):
-		child_brain_layers.append(_layers[i])
-		child_brain_layers.append(other_car._layers[(lsize-1)-i])
+		child_brain_layers.append(_layers[i].new_dense())
+		child_brain_layers.append(other_car._layers[(lsize-1)-i].new_dense())
 	
 	var child_car: Car = GUtils.CAR_SCENE.instantiate();
 	var child_brain: CarBrain = CarBrain.new(child_car, false)

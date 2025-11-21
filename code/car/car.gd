@@ -10,6 +10,8 @@ var _brain: CarBrain;
 
 var _is_alive: bool = true;
 var _score: float = 0.0;
+@warning_ignore("unused_private_class_variable")
+var _checkpoints: Array[int];
 
 var _acceleration: float = 0;
 var _steering: float = 0;
@@ -45,7 +47,7 @@ func _process(delta: float) -> void:
 	if playerDriving:
 		if !did_player_accelerated():
 			slow_down();
-		if can_steer():
+		if is_acceleration_in_thrashold():
 			steer_player();
 		else:
 			straighten();
@@ -116,7 +118,7 @@ func kill() -> void:
 	_acceleration = 0.0;
 	_steering = 0.0;
 	died.emit(self)
-	
+	add_score(GUtils.DEATH_PENALTY)
 	var temp: ShaderMaterial = sprite.material;
 	temp.set_shader_parameter("is_dead", true)
 
@@ -149,3 +151,15 @@ func straigten_slowly() -> void:
 func straighten() -> void:
 	_steering = lerp(_steering, 0.0, 1)
 # ===========================================
+
+func print_weights() -> void:
+	print("Car: ", self.name, " | Data: [")
+	for layer in _brain._layers:
+		print("	[")
+		for dense in layer._neurons:
+			printraw("		[")
+			for weight in dense._weights:
+				print("			", weight)
+			print("		] | [ Bias: ", dense._bias, " ]")
+		print("	]")
+	print("]")
