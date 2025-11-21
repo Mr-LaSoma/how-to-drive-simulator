@@ -3,11 +3,15 @@ extends Node
 const CAR_SCENE = preload("res://scenes/car.tscn");
 const N_INITIAL_CARS: int = 10;
 
-const N_PARENTS_CARS: int = 5;
+const N_PARENTS_CARS: int = 2;
+const DEATH_TIMER_TIME: float = 10.0;
 
 const DEATH_PENALTY: float = -40.0;
 const CHECKPOINT_POINTS: float = 150.0;
-const TIME_PENALTY: float = -0.1;
+const TIME_PENALTY: float = -0.01;
+
+# Non dovrebbe stare qui ma questo codice fa schifo quindi perché no
+var checkpoint: Array[Area2D];
 
 func super_randf() -> float:
 	return randf() * randf();
@@ -44,5 +48,5 @@ func normalize_than_output(output: float) -> float:
 ## The mutation is just adding to the [param value] a random [code] float [/code]. [br]
 ## The float is a random R value from 0 to 1
 func mutate_value(value: float) -> float:
-	return value + randf_range(-5, 5);
+	return value + randf_range(-0.5, 0.5);
 #endregion ==============================================================

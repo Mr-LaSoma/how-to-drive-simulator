@@ -8,8 +8,12 @@ signal died(car: Car);
 
 var _brain: CarBrain;
 
+var _best_checkpoint: int = -1;
+
 var _is_alive: bool = true;
+var done: bool = false
 var _score: float = 0.0;
+
 @warning_ignore("unused_private_class_variable")
 var _checkpoints: Array[int];
 
@@ -24,6 +28,7 @@ const MIN_STEERING: float = -70;
 
 const STEERING_TRASHOLD: float = 3;
 
+@onready var timer: Timer = $"Timer";
 @onready var sprite: Sprite2D = $Sprite;
 @onready var ray1: RayCast2D = $Distance_1;
 @onready var ray2: RayCast2D = $Distance_2;
@@ -34,6 +39,10 @@ const STEERING_TRASHOLD: float = 3;
 
 func _ready() -> void:
 	sprite.material = sprite.material.duplicate(true);
+	_score = 0
+	
+	timer.one_shot = true
+	timer.stop()
 	
 	if _should_rand:
 		_brain = CarBrain.new(self, true);
@@ -58,6 +67,12 @@ func _process(delta: float) -> void:
 	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100.0;
 	
 	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3]);
+	
+	if _best_checkpoint == _checkpoints.size()-1:
+		if timer.is_stopped():
+			timer.start(GUtils.DEATH_TIMER_TIME)
+	elif not timer.is_stopped():
+		timer.stop()
 
 func _physics_process(delta: float) -> void:
 	if !_is_alive:
@@ -68,9 +83,16 @@ func _physics_process(delta: float) -> void:
 	velocity = velocity.move_toward(forward * _acceleration, 100 * delta)
 	if _acceleration == 0:
 		velocity = velocity.move_toward(Vector2.ZERO, 200 * delta)
-
+	
 	move_and_slide();
 # ===========================================
+func _on_timer_timeout() -> void:
+	if not done:
+		done = true
+		kill()
+
+func score_dist_checkpoint() -> void:
+	add_score(-0.01 * (global_position.distance_to(GUtils.checkpoint[_checkpoints.size()].global_position)))
 
 # ============ Player Functions =============
 func did_player_accelerated() -> bool:
@@ -114,13 +136,16 @@ func do_brain_choice(brain_choice: Array[float]) -> void:
 
 
 func kill() -> void:
+	if playerDriving:
+		return
+	
 	_is_alive = false;
 	_acceleration = 0.0;
 	_steering = 0.0;
-	died.emit(self)
 	add_score(GUtils.DEATH_PENALTY)
 	var temp: ShaderMaterial = sprite.material;
 	temp.set_shader_parameter("is_dead", true)
+	died.emit(self)
 
 func add_score(value: float) -> void:
 	_score += value;
@@ -151,15 +176,3 @@ func straigten_slowly() -> void:
 func straighten() -> void:
 	_steering = lerp(_steering, 0.0, 1)
 # ===========================================
-
-func print_weights() -> void:
-	print("Car: ", self.name, " | Data: [")
-	for layer in _brain._layers:
-		print("	[")
-		for dense in layer._neurons:
-			printraw("		[")
-			for weight in dense._weights:
-				print("			", weight)
-			print("		] | [ Bias: ", dense._bias, " ]")
-		print("	]")
-	print("]")

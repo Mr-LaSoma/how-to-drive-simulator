@@ -7,16 +7,13 @@
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
 
-[node name="CarDeathTimer" type="Timer" parent="."]
-
 [node name="TestCar" parent="." instance=ExtResource("1_uwrxv")]
 position = Vector2(-232, 0)
 playerDriving = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(348, 145)
 zoom = Vector2(0.75, 0.75)
 
 [node name="Map1" parent="." instance=ExtResource("4_lbhrr")]
 position = Vector2(166, -214.99997)
-
-[connection signal="timeout" from="CarDeathTimer" to="." method="_on_car_death_timer_timeout"]
