@@ -67,10 +67,10 @@ func _process(delta: float) -> void:
 			straighten();
 		return
 	
-	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 500.0;
-	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 500.0;
-	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 500.0;
-	var dist4 = ray4.get_collision_point().distance_to(global_position) if ray4.is_colliding() else 500.0;
+	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else GUtils.RAY_NOT_FOUND;
+	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else GUtils.RAY_NOT_FOUND;
+	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else GUtils.RAY_NOT_FOUND;
+	var dist4 = ray4.get_collision_point().distance_to(global_position) if ray4.is_colliding() else GUtils.RAY_NOT_FOUND;
 	
 	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3, dist4]);
 	

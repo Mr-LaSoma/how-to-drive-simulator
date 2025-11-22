@@ -1,5 +1,6 @@
 extends Node2D
 
+var generation: int = 1;
 var counter = 0;
 var alive_cars: Array[Car];
 var dead_cars: Array[Car];
@@ -34,10 +35,9 @@ func reset_game() -> void:
 	# Sposta tutte le auto da alive_cars a dead_cars
 	for car in dead_cars:
 		car.score_dist_checkpoint()
-	
 	# Ordina le auto morte per punteggio decrescente
 	dead_cars.sort_custom(_sort_by_score_desc)
-	for i in range(5):
+	for i in range(GUtils.N_PARENTS_CARS):
 		print("Car: ", dead_cars[i].name, " | Points: ", dead_cars[i]._score)
 		pass
 	print()
@@ -52,7 +52,7 @@ func reset_game() -> void:
 		var new_car: Car = parent_car._brain.mutate(parent_car2._brain)
 		
 		new_car.name = str(counter)
-		counter += 1
+		counter = 0 if counter >= (GUtils.N_INITIAL_CARS*2)-1 else counter + 1  
 		new_car.global_position = global_position * GUtils.super_randf()
 		new_car.died.connect(_on_car_died)
 		
@@ -68,7 +68,14 @@ func reset_game() -> void:
 
 	dead_cars.clear()
 	GUtils.MAX_POINTS += GUtils.MAX_POINTS_INCRESE;
+	generation += 1;
+	call_deferred("change_colors");
 
 # Funzione per ordinare in base al punteggio decrescente
 func _sort_by_score_desc(a: Car, b: Car) -> int:
 	return a._score > b._score;
+
+func change_colors() -> void:
+	for car in alive_cars:
+		var temp: ShaderMaterial = car.sprite.material;
+		temp.set_shader_parameter("color_change", generation % 256)

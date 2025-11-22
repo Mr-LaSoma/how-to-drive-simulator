@@ -17,7 +17,7 @@ func on_checkpoint_hitbox_area_entered(area: Area2D, sender_indx: int) -> void:
 		car._best_checkpoint+=1;
 		car.timer.stop()
 	else:
-		car.add_score(GUtils.DEATH_PENALTY)
+		car.add_score(GUtils.DEATH_PENALTY*2)
 		print("[CHECKPOINT] Car: ", car.name, " | Penalità -> ", car._checkpoints, " but ", sender_indx)
 	
 	if sender_indx == GUtils.checkpoint.size() - 1:
