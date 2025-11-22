@@ -37,8 +37,8 @@ func reset_game() -> void:
 	
 	# Ordina le auto morte per punteggio decrescente
 	dead_cars.sort_custom(_sort_by_score_desc)
-	for car in dead_cars:
-		print("Car: ", car.name, " | Points: ", car._score)
+	for i in range(5):
+		print("Car: ", dead_cars[i].name, " | Points: ", dead_cars[i]._score)
 		pass
 	print()
 	
@@ -67,6 +67,7 @@ func reset_game() -> void:
 			car.call_deferred("queue_free")
 
 	dead_cars.clear()
+	GUtils.MAX_POINTS += GUtils.MAX_POINTS_INCRESE;
 
 # Funzione per ordinare in base al punteggio decrescente
 func _sort_by_score_desc(a: Car, b: Car) -> int:

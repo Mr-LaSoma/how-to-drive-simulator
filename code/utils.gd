@@ -1,14 +1,19 @@
 extends Node
 
 const CAR_SCENE = preload("res://scenes/car.tscn");
-const N_INITIAL_CARS: int = 10;
+const N_INITIAL_CARS: int = 50;
 
-const N_PARENTS_CARS: int = 2;
+const N_PARENTS_CARS: int = 5;
 const DEATH_TIMER_TIME: float = 10.0;
 
-const DEATH_PENALTY: float = -40.0;
-const CHECKPOINT_POINTS: float = 150.0;
-const TIME_PENALTY: float = -0.01;
+const DEATH_PENALTY: float = -4.0;
+const CHECKPOINT_POINTS: float = 15.0;
+const TIME_PENALTY: float = -0.001;
+const DIST_MULT: float = -0.005;
+
+const MAX_POINTS_INCRESE: float = 10.0;
+var MAX_POINTS: float = 700.0;
+
 
 # Non dovrebbe stare qui ma questo codice fa schifo quindi perché no
 var checkpoint: Array[Area2D];

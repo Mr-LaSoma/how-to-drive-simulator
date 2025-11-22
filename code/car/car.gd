@@ -6,6 +6,7 @@ signal died(car: Car);
 @export var playerDriving: bool = false;
 @export var _should_rand: bool = false;
 
+var debug: bool = false;
 var _brain: CarBrain;
 
 var _best_checkpoint: int = -1;
@@ -33,6 +34,7 @@ const STEERING_TRASHOLD: float = 3;
 @onready var ray1: RayCast2D = $Distance_1;
 @onready var ray2: RayCast2D = $Distance_2;
 @onready var ray3: RayCast2D = $Distance_3;
+@onready var ray4: RayCast2D = $Distance_4;
 # ===========================================
 
 # =========== Override Functions ============
@@ -50,7 +52,10 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if !_is_alive:
 		return;
-
+	
+	if debug:
+		print(timer.time_left)
+	
 	rotation_degrees += _steering * delta;
 	
 	if playerDriving:
@@ -62,17 +67,16 @@ func _process(delta: float) -> void:
 			straighten();
 		return
 	
-	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 100.0;
-	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 100.0;
-	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 100.0;
+	var dist1 = ray1.get_collision_point().distance_to(global_position) if ray1.is_colliding() else 500.0;
+	var dist2 = ray2.get_collision_point().distance_to(global_position) if ray2.is_colliding() else 500.0;
+	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else 500.0;
+	var dist4 = ray4.get_collision_point().distance_to(global_position) if ray4.is_colliding() else 500.0;
 	
-	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3]);
+	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3, dist4]);
 	
-	if _best_checkpoint == _checkpoints.size()-1:
-		if timer.is_stopped():
-			timer.start(GUtils.DEATH_TIMER_TIME)
-	elif not timer.is_stopped():
-		timer.stop()
+	if timer.is_stopped():
+		timer.start(GUtils.DEATH_TIMER_TIME)
+
 
 func _physics_process(delta: float) -> void:
 	if !_is_alive:
@@ -85,6 +89,12 @@ func _physics_process(delta: float) -> void:
 		velocity = velocity.move_toward(Vector2.ZERO, 200 * delta)
 	
 	move_and_slide();
+
+#func _notification(what: int) -> void:
+#	if what == NOTIFICATION_PREDELETE:
+#		print("[DEATH] Car: ", name, " | Time: ", timer.time_left)
+#		print()
+
 # ===========================================
 func _on_timer_timeout() -> void:
 	if not done:
@@ -92,8 +102,7 @@ func _on_timer_timeout() -> void:
 		kill()
 
 func score_dist_checkpoint() -> void:
-	add_score(-0.01 * (global_position.distance_to(GUtils.checkpoint[_checkpoints.size()].global_position)))
-
+	add_score(GUtils.DIST_MULT * (global_position.distance_to(GUtils.checkpoint[_checkpoints.size()].global_position)))
 # ============ Player Functions =============
 func did_player_accelerated() -> bool:
 	if Input.is_action_pressed("acc_+"):
@@ -149,6 +158,8 @@ func kill() -> void:
 
 func add_score(value: float) -> void:
 	_score += value;
+	if _score > GUtils.MAX_POINTS:
+		kill()
 
 # =========== Car Movement Functions ========
 func accelerate_forward() -> void:

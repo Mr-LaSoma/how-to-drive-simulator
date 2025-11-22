@@ -40,6 +40,10 @@ collision_mask = 2
 target_position = Vector2(100, 45)
 collision_mask = 2
 
+[node name="Distance_4" type="RayCast2D" parent="."]
+position = Vector2(1, 4.371139e-08)
+rotation = 1.5707964
+
 [node name="Area2D" type="Area2D" parent="."]
 collision_mask = 2
 script = ExtResource("4_jtldb")
