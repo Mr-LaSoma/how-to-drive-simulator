@@ -53,8 +53,9 @@ func reset_game() -> void:
 		
 		new_car.name = str(counter)
 		counter = 0 if counter >= (GUtils.N_INITIAL_CARS*2)-1 else counter + 1  
-		new_car.global_position = global_position * GUtils.super_randf()
+		new_car.global_position = global_position
 		new_car.died.connect(_on_car_died)
+		new_car.rotation_degrees = -70 - randi_range(-20, 20);
 		
 		alive_cars.append(new_car)
 		call_deferred("add_child", new_car)

@@ -12,7 +12,7 @@ func _init(car: Car, should_rand: bool) -> void:
 	
 	if should_rand:
 		_layers = [
-			Dense.new(8, 2, true),						# Inputs -> [acceleration, steering, posX, posY, ray1_dist, ray2_dist, ray3_dist, ray4_dist]
+			Dense.new(9, 2, true),						# Inputs -> [acceleration, steering, posX, posY, rotation, ray1_dist, ray2_dist, ray3_dist, ray4_dist]
 			Dense.new(2, 2, true)						# Inputs -> [neuron1, neuron2]  |  Outputs -> [acceleration, steering]
 		]
 

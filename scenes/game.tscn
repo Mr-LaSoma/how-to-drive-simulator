@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://dhkvrxe11c11a"]
+[gd_scene load_steps=5 format=3 uid="uid://dhkvrxe11c11a"]
 
 [ext_resource type="Script" uid="uid://bmwpvjhfbhs4y" path="res://code/game_handler.gd" id="1_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://de76j5oq1tibl" path="res://scenes/car.tscn" id="1_uwrxv"]
-[ext_resource type="PackedScene" uid="uid://city3i6awvvag" path="res://scenes/map_1.tscn" id="4_lbhrr"]
+[ext_resource type="Script" uid="uid://c0m3fqpfbj3tl" path="res://code/camera_2d.gd" id="3_lbhrr"]
+[ext_resource type="PackedScene" uid="uid://dlp7e07dmrghx" path="res://scenes/map_2.tscn" id="3_lnu2h"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_lnu2h")
@@ -14,6 +15,8 @@ playerDriving = true
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(348, 145)
 zoom = Vector2(0.75, 0.75)
+script = ExtResource("3_lbhrr")
 
-[node name="Map1" parent="." instance=ExtResource("4_lbhrr")]
-position = Vector2(166, -214.99997)
+[node name="map_2" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(1575, -106)
+scale = Vector2(10, 10)

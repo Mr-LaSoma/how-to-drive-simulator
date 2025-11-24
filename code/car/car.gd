@@ -72,7 +72,7 @@ func _process(delta: float) -> void:
 	var dist3 = ray3.get_collision_point().distance_to(global_position) if ray3.is_colliding() else GUtils.RAY_NOT_FOUND;
 	var dist4 = ray4.get_collision_point().distance_to(global_position) if ray4.is_colliding() else GUtils.RAY_NOT_FOUND;
 	
-	_brain.play([_acceleration, _steering, global_position.x, global_position.y, dist1, dist2, dist3, dist4]);
+	_brain.play([_acceleration, _steering, global_position.x, global_position.y, rotation_degrees, dist1, dist2, dist3, dist4]);
 	
 	if timer.is_stopped():
 		timer.start(GUtils.DEATH_TIMER_TIME)
@@ -99,10 +99,11 @@ func _physics_process(delta: float) -> void:
 func _on_timer_timeout() -> void:
 	if not done:
 		done = true
+		add_score(-GUtils.DEATH_PENALTY*0.5)
 		kill()
 
 func score_dist_checkpoint() -> void:
-	add_score(GUtils.DIST_MULT * (global_position.distance_to(GUtils.checkpoint[_checkpoints.size()].global_position)))
+	add_score(GUtils.DIST_MULT * (global_position.distance_to(GUtils.checkpoint[_checkpoints.size()].get_child(0).global_position)))
 # ============ Player Functions =============
 func did_player_accelerated() -> bool:
 	if Input.is_action_pressed("acc_+"):
